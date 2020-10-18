@@ -1,10 +1,9 @@
 package com.mmoreira.blog.util;
 
+import java.io.IOException;
+
 public interface FileIO {
-	
-	String getFilePath(String userName);
-	byte[] getFile(String path);
+	byte[] getFile(String path) throws IOException;
 	void deleteFile(String path);
-	void saveFile(String path, byte[] image);
-	byte[] compressImage(byte[] originalImage);
+	String saveFile(byte[] image);
 }

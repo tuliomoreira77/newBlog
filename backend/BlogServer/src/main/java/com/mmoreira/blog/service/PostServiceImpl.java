@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mmoreira.blog.exception.InvalidFieldsException;
 import com.mmoreira.blog.exception.NotOwnerException;
 import com.mmoreira.blog.exception.ResourceNotFoundExeception;
 import com.mmoreira.blog.object.CommentDto;
@@ -29,6 +30,7 @@ import com.mmoreira.blog.repository.entity.Post;
 import com.mmoreira.blog.repository.entity.search.PostSearch;
 import com.mmoreira.blog.util.FileIO;
 import com.mmoreira.blog.validator.OwnerValidator;
+import com.mmoreira.blog.validator.TextFieldValidator;
 
 @Service
 @Qualifier("PostService")
@@ -46,6 +48,8 @@ public class PostServiceImpl implements PostService{
 	@Autowired
 	private PhotoRepository photoRepository;
 	
+	@Autowired
+	@Qualifier("LocalFileIO")
 	private FileIO fileIO;
 	
 	@Override
@@ -60,7 +64,10 @@ public class PostServiceImpl implements PostService{
 	
 	@Override
 	@Transactional
-	public Post createPost(PostDto postDto, String userName) {
+	public Post createPost(PostDto postDto, String userName) throws InvalidFieldsException {
+		if(TextFieldValidator.isNull(postDto.getText())) {
+			throw new InvalidFieldsException();
+		}
 		Post post = new Post();
 		post.setText(postDto.getText());
 		post.setUserName(userName);
@@ -72,6 +79,7 @@ public class PostServiceImpl implements PostService{
 	}
 	
 	@Override
+	@Transactional
 	public void deletePost(Integer code, String userName) throws NotOwnerException, ResourceNotFoundExeception {
 		Post post = new Post();
 		post.setCode(code);
@@ -86,9 +94,14 @@ public class PostServiceImpl implements PostService{
 		}
 		commentRepository.deleteAll(post.getComments());
 		postRepository.delete(post);
+		
+		if(post.getPhoto() != null) {
+			fileIO.deleteFile(post.getPhoto().getPath());
+		}
 	}
 	
 	@Override
+	@Transactional
 	public void deleteComment(Integer code, String userName) throws NotOwnerException, ResourceNotFoundExeception {
 		Comment comment = new Comment();
 		comment.setCode(code);
@@ -101,7 +114,11 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	@Transactional
-	public Comment createComment(CommentDto commentDto, String userName) throws ResourceNotFoundExeception {
+	public Comment createComment(CommentDto commentDto, String userName) throws ResourceNotFoundExeception, InvalidFieldsException {
+		if(TextFieldValidator.isNull(commentDto.getText())) {
+			throw new InvalidFieldsException();
+		}
+		
 		Post post = postRepository.findById(commentDto.getPostCode()).orElse(null);
 		if(post == null) {
 			throw new ResourceNotFoundExeception();
@@ -122,10 +139,10 @@ public class PostServiceImpl implements PostService{
 		String img64 = postDto.getPhotoBase64();
 		Photo photo = null;
 		if(img64 != null && !img64.isEmpty()) {
-			byte[] compressedFile = fileIO.compressImage(Base64.getDecoder().decode(img64.getBytes()));
-			fileIO.saveFile(fileIO.getFilePath(userName), compressedFile);
+			byte[] file = Base64.getDecoder().decode(img64.getBytes());
+			String filePath = fileIO.saveFile(file);
 			photo = new Photo();
-			photo.setPath(fileIO.getFilePath(userName));
+			photo.setPath(filePath);
 			photo.setAlbum(findDefaultAlbum(userName));
 			photo.setDate(new Date());
 			photoRepository.save(photo);
@@ -140,6 +157,7 @@ public class PostServiceImpl implements PostService{
 			photoAlbum.setDefaultAlbum(true);
 			photoAlbum.setUserName(userName);
 			photoAlbum.setDate(new Date());
+			photoAlbum.setName("Fotos da linha do tempo");
 			photoAlbum = albumRepository.save(photoAlbum);
 		}
 		return photoAlbum;

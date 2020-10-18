@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mmoreira.blog.object.BlogEntity;
 
 @Entity
@@ -24,6 +25,7 @@ public class Photo implements BlogEntity{
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(updatable = false, referencedColumnName = "code")
+	@JsonIgnore
 	private PhotoAlbum album;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

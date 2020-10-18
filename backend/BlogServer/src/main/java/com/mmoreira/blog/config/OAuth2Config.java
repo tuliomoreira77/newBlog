@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 public class OAuth2Config extends ResourceServerConfigurerAdapter {
 	
-	@Value("oauth2.client.id")
+	@Value("${oauth2.client.id}")
 	private String client_id;
 	
 	@Override

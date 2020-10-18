@@ -6,20 +6,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mmoreira.blog.exception.ErrorMessage;
+import com.mmoreira.blog.exception.InvalidFieldsException;
 import com.mmoreira.blog.exception.NotOwnerException;
 import com.mmoreira.blog.exception.ResourceNotFoundExeception;
 import com.mmoreira.blog.object.CommentDto;
@@ -44,7 +39,7 @@ public class PostController {
 	}
 	
 	@PostMapping("/posts")
-	public Post createPost(@RequestBody PostDto postDto, Principal principal) {
+	public Post createPost(@RequestBody PostDto postDto, Principal principal) throws InvalidFieldsException {
 		Post post = postService.createPost(postDto, principal.getName());
 		return post;
 	}
@@ -72,20 +67,5 @@ public class PostController {
 		return map;
 	}
 	
-	@ControllerAdvice
-	class GlobalControllerExceptionHandler {
-	    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	    @ExceptionHandler(ResourceNotFoundExeception.class)
-	    @ResponseBody
-	    public ErrorMessage handleNotFound(Exception ex) {
-	        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-	    }
-	    
-	    @ResponseStatus(code = HttpStatus.FORBIDDEN)
-	    @ExceptionHandler(NotOwnerException.class)
-	    @ResponseBody
-	    public ErrorMessage handleNotOwner(Exception ex) {
-	        return new ErrorMessage(HttpStatus.FORBIDDEN.value(), ex.getMessage());
-	    }
-	}
+	
 }

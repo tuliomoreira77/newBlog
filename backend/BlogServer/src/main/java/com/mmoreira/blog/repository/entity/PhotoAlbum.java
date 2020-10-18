@@ -28,6 +28,9 @@ public class PhotoAlbum implements BlogEntity{
 	@Column(nullable = false, length = 255)
 	private String userName;
 	
+	@Column(length = 255)
+	private String name;
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "album", cascade = CascadeType.ALL)
 	private List<Photo> photos;
 	
@@ -81,6 +84,12 @@ public class PhotoAlbum implements BlogEntity{
 	public String getOwner() {
 		return this.userName;
 	}
-	
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

@@ -1,5 +1,6 @@
 package com.mmoreira.blog.service;
 
+import com.mmoreira.blog.exception.InvalidFieldsException;
 import com.mmoreira.blog.exception.NotOwnerException;
 import com.mmoreira.blog.exception.ResourceNotFoundExeception;
 import com.mmoreira.blog.object.CommentDto;
@@ -10,7 +11,7 @@ import com.mmoreira.blog.repository.entity.Post;
 
 public interface PostService {
 
-	Post createPost(PostDto postDto, String userName);
+	Post createPost(PostDto postDto, String userName) throws InvalidFieldsException;
 	Comment createComment(CommentDto commentDto, String userName) throws Exception;
 	PageDto<Post> getPosts(Integer pageNumber, String search);
 	void deletePost(Integer code, String userName) throws NotOwnerException, ResourceNotFoundExeception;
