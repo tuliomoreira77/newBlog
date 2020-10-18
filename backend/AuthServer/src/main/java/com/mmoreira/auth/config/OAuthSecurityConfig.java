@@ -62,7 +62,7 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter{
 	 public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		 clients.inMemory().withClient(clientid).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
 		 	.authorizedGrantTypes("password", "refresh_token", "authorization_code", "implicit")
-		 	.redirectUris("http://localhost:8081/")
+		 	.redirectUris("http://localhost:4200/oauth/redirect")
 		 	.autoApprove(true)
 		 	.accessTokenValiditySeconds(3600)
 		 	.refreshTokenValiditySeconds(3600);

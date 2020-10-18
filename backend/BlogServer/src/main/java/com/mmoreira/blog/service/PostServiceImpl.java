@@ -56,7 +56,7 @@ public class PostServiceImpl implements PostService{
 	public PageDto<Post> getPosts(Integer pageNumber, String search) {
 		pageNumber = pageNumber == null ? 0 : pageNumber;
 		PostSearch postSearch = new PostSearch(search);
-		Pageable pageable = PageRequest.of(pageNumber, 50, Sort.Direction.ASC, "date");
+		Pageable pageable = PageRequest.of(pageNumber, 50, Sort.Direction.DESC, "date");
 		Page<Post> posts = postRepository.findAll(postSearch, pageable);
 		PageDto<Post> pageDto = new PageDto<>(posts);
 		return pageDto;

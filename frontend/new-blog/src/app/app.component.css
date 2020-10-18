@@ -1,0 +1,29 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.root-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.toolbar-content {
+    width: 100vw;
+}
+
+.toolbar-content {
+    margin: auto;
+    display: flex;
+    max-width: 1000px;
+    width: 100vw;
+}
+
+.outlet-container {
+    margin: auto;
+    display: flex;
+    max-width: 1000px;
+    width: 100vw;
+    justify-content: center;
+    background: #f8f8f8;
+    min-height: 100vh;
+}

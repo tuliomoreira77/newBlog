@@ -1,0 +1,48 @@
+<div class="main-container">
+    <div fxLayout="row" class="new-post-area">
+        <mat-card class="new-post-card"> 
+            <div class="input-form full-width">
+                <mat-form-field class="full-width">
+                    <mat-label>Novo post</mat-label>
+                    <textarea #newPostText matInput placeholder="Conte-nos algo interessante!"  cdkTextareaAutosize cdkAutosizeMaxRows="5" cdkAutosizeMinRows="1"></textarea>
+                </mat-form-field>
+                <div class="new-image-area" *ngIf="newPostImageBase64 != null">
+                    <button mat-mini-fab color="primary" (click)="removeNewPostImage()">
+                        <mat-icon>highlight_off</mat-icon>
+                      </button>
+                    <img *ngIf="newPostImageBase64 != null" mat-card-image src="{{newPostImageBase64}}" alt="Imagem">
+                </div>
+                <div fxLayout="row" class="buttom-area">
+                    <input type="file" (change)="onFileChanged($event)" style="display: none" #fileInput accept="image/png">
+                    <button mat-mini-fab color="primary" matTooltip="Adicionar foto" (click)="fileInput.click()">
+                        <mat-icon>add_photo_alternate</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <button mat-raised-button color="primary" matTooltip="Enviar" (click)="createPost(newPostText)">Enviar</button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="post-timeline">
+        <mat-card class="post-card" *ngFor="let post of posts; let i = index">
+            <mat-card-header>
+              <div mat-card-avatar class="header-image"></div>
+              <mat-card-title>{{post.owner}}</mat-card-title>
+              <mat-card-subtitle>{{post.date | date: 'medium'}}</mat-card-subtitle>
+              <button *ngIf="userName == post.owner" mat-icon-button color="primary" class="exlude-post-button" (click)="deletePost(post.code)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </mat-card-header>
+            <img *ngIf="post.imageBase64 != null" mat-card-image src="data:image/png;base64,{{post.imageBase64}}" alt="Imagem">
+            <mat-card-content>
+              <p>
+                {{post.text}}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary">COMENTAR</button>
+              <button mat-raised-button color="primary">EXIBIR COMENTÁRIOS</button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+</div>

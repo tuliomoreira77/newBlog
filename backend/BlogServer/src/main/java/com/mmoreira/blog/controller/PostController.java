@@ -66,6 +66,4 @@ public class PostController {
 		map.put("success", "Entidade excluida");
 		return map;
 	}
-	
-	
 }
