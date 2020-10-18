@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostServiceService } from '../post-service/post-service.service';
-import {Post, Comment, SendPost} from '../interfaces/intefaces';
+import {Post, Comment, SendPost, SendComment} from '../interfaces/intefaces';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ViewChild } from '@angular/core';
 import { TokenService } from '../auth/token.service';
@@ -29,8 +29,8 @@ export class MainTimelineComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((data) => {
+      console.log(data)
       this.postArrayFactory(data);
-      console.log(this.posts);
     })
     this.tokenService.getUser().subscribe(data => {
       this.userName = data.user_name;
@@ -51,8 +51,24 @@ export class MainTimelineComponent implements OnInit {
         }
         this.getPostImage(post, content.photo.code);
       }
+      post.comments = this.commentArrayFactory(content);
       this.posts.push(post);
     }
+  }
+
+  commentArrayFactory(post:any) {
+    let comments = [];
+    for(let content of post.comments) {
+      let comment:Comment = {
+        code: content.code,
+        date: new Date(content.date),
+        owner: content.owner,
+        text: content.text,
+        post: post.code,
+      }
+      comments.push(comment);
+    }
+    return comments;
   }
 
   getPostImage(post:Post, code:number) {
@@ -72,6 +88,23 @@ export class MainTimelineComponent implements OnInit {
     input.value = "";
     this.newPostImageBase64 = null;
     this.postService.sendPost(newPost).subscribe(data => {
+      if(data.code) {
+        this.refreshPosts();
+      } else {
+        let snackBarRef = this.snackBar.open('Ocorreu um erro!', 'OK', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  createComment(input:any, code:number) {
+    let newComment:SendComment = {
+      postCode: code,
+      text: input.value,
+    }
+    input.value = "";
+    this.postService.sendComment(newComment).subscribe(data => {
       if(data.code) {
         this.refreshPosts();
       } else {
@@ -107,5 +140,11 @@ export class MainTimelineComponent implements OnInit {
     this.postService.delete(code).subscribe(data => {
         this.refreshPosts();
     });
+  }
+
+  deleteComment(code:number) {
+    this.postService.deleteComment(code).subscribe(data => {
+      this.refreshPosts();
+  });
   }
 }

@@ -6,12 +6,18 @@ export interface Post {
     image?: {
         code: number,
     }
-    imageBase64?,
+    imageBase64?:string,
+    comments?: Array<Comment>,
 }
 
 export interface SendPost {
     text: string,
     photoBase64?: string,
+}
+
+export interface SendComment {
+    postCode:number,
+    text: string,
 }
 
 export interface Comment {

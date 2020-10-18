@@ -32,7 +32,7 @@ public class Post implements BlogEntity{
 	
 	private String text;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
 	private List<Comment> comments;
 	
 	@OneToOne(fetch = FetchType.EAGER, optional = true)

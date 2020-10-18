@@ -108,8 +108,8 @@ public class PostServiceImpl implements PostService{
 		OwnerValidator<Comment> validator = new OwnerValidator<Comment>(userName, comment, commentRepository);
 
 		validator.isOwner();
-		
-		commentRepository.deleteById(code);
+		comment = commentRepository.findById(code).orElse(null);
+		commentRepository.delete(comment);
 	}
 
 	@Override

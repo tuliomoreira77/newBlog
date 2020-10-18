@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mmoreira.blog.object.BlogEntity;
 
 @Entity
@@ -28,6 +29,7 @@ public class Comment implements BlogEntity{
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(updatable = false, referencedColumnName = "code")
+	@JsonIgnore
 	private Post post;
 	
 	@Column(nullable = false, length = 255)

@@ -40,8 +40,26 @@
               </p>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button color="primary">COMENTAR</button>
-              <button mat-raised-button color="primary">EXIBIR COMENTÁRIOS</button>
+              <mat-divider></mat-divider>
+              <div class="comment-section">
+                <div fxLayout="row" class="new-comment-section">
+                  <mat-form-field style="width: 100%;">
+                    <input type="text" matInput placeholder="digite um comentário" #newCommentText>
+                  </mat-form-field>
+                  <button mat-icon-button color="primary" class="" (click)="createComment(newCommentText, post.code)">
+                    <mat-icon>send</mat-icon>
+                  </button>
+                </div>
+                <div class="comments-list-section">
+                  <div class="comment" *ngFor="let comment of post.comments; let j = index">
+                    <button *ngIf="userName == comment.owner" color="primary" (click)="deleteComment(comment.code)" style="height: 12px; font-size: 8px; margin-right: 5px;">
+                      X
+                    </button>
+                    <span><b>{{comment.owner}}:</b></span>
+                    <span style="margin-left:15px">{{comment.text}}</span>  
+                  </div>
+                </div>
+              </div>
             </mat-card-actions>
           </mat-card>
     </div>
