@@ -25,7 +25,7 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactoryBean.setPackagesToScan("com.mmoreira.auth.repository.entity");
+        entityManagerFactoryBean.setPackagesToScan("com.mmoreira.blog.repository.entity");
         return entityManagerFactoryBean;
     }
 	

@@ -1,5 +1,6 @@
 package com.mmoreira.blog.repository.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,9 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.mmoreira.blog.object.BlogEntity;
+
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post implements BlogEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +39,9 @@ public class Post {
 	@JoinColumn(name="photo_code", referencedColumnName="code", updatable=false)
 	private Photo photo;
 	
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(nullable = false)
+	private Date date;
 
 	public int getCode() {
 		return code;
@@ -73,6 +81,19 @@ public class Post {
 
 	public void setPhoto(Photo photo) {
 		this.photo = photo;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@Override
+	public String getOwner() {
+		return userName;
 	}
 	
 	
