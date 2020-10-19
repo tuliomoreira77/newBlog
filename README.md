@@ -29,6 +29,7 @@ ERROS CONHECIDOS: \
   O servidor de autenticação está mantendo a sessão realizar o login. Isso é um problema com a biblioteca de oauth do spring boot, \
         onde ela não expira a sessão ao redirecionar de volta o usuário. Existem algumas soluções, mas não tive tempo de implementar;
         Isso causa o problema onde ao realizar o logout a aplicação é relogada automaticamente; \
+        Configurei manualmente o servidor para expirar a sessão após 180s, dessa forma é possivel deslogar após 180s;
         Um "workaround" é limpar manualmente o cookie JSESSIONID. \
         
   Apesar das apis para criação de album de fotos, exclusão, inserção de photos (PhotoAlbumController) e exclusão estarem prontas; \
