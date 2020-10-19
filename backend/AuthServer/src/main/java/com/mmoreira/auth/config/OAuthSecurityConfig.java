@@ -24,6 +24,9 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter{
 	 @Value("${client.redirect.uri}")
 	 private String clienteRedirectUri;
 	 
+	 @Value("${client.redirect.uri2}")
+	 private String clienteRedirectUri2;
+	 
 	 //TODO usar chaves RSA ao inves de HMAC
 	 private String privateKey = "f6891b4ebb65de4ad11b134e6cfd648b726e2c27";
 	 private String publicKey = "f6891b4ebb65de4ad11b134e6cfd648b726e2c27";
@@ -66,7 +69,7 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter{
 	 public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		 clients.inMemory().withClient(clientid).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
 		 	.authorizedGrantTypes("password", "refresh_token", "authorization_code", "implicit")
-		 	.redirectUris(clienteRedirectUri)
+		 	.redirectUris(clienteRedirectUri, clienteRedirectUri2)
 		 	.autoApprove(true)
 		 	.accessTokenValiditySeconds(3600)
 		 	.refreshTokenValiditySeconds(3600);
