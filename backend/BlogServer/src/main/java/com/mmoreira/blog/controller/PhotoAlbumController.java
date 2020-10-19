@@ -38,6 +38,11 @@ public class PhotoAlbumController {
 		return albumService.getPhotoAlbums(principal.getName());
 	}
 	
+	@GetMapping("/albums/{code}/photos")
+	public List<Photo> getPhotos(@PathVariable Integer code) throws ResourceNotFoundExeception {
+		return albumService.getPhotos(code);
+	}
+	
 	@GetMapping("/albums/photos/{code}") 
 	public Map<String,String> getPhotoFile(@PathVariable Integer code, Principal principal) throws ResourceNotFoundExeception, IOException {
 		Map<String,String> map = new HashMap<String, String>();

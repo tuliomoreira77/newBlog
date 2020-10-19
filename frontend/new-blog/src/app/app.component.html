@@ -2,9 +2,9 @@
 <div class="root-container">
     <mat-toolbar fxLayout="row" fxLayoutAlign="center center" color="primary">
         <div class="toolbar-content">
-            <span>Olá, Fulano</span>
+            <span style="cursor: pointer" (click)="redirectToBlog()">Blog</span>
             <span class="spacer"></span>
-            <button mat-icon-button class="" aria-label="Album de fotos" matTooltip="Album de fotos">
+            <button mat-icon-button class="" aria-label="Album de fotos" matTooltip="Album de fotos" (click)="redirectToPhotoAlbum()">
                 <mat-icon>photo_library</mat-icon>
             </button>
             <button mat-icon-button class="" aria-label="Sair" matTooltip="Sair">

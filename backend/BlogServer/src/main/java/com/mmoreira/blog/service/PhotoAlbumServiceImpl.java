@@ -44,6 +44,15 @@ public class PhotoAlbumServiceImpl implements PhotoAlbumService {
 	}
 	
 	@Override
+	public List<Photo> getPhotos(Integer albumCode) throws ResourceNotFoundExeception {
+		PhotoAlbum album = albumRepository.findById(albumCode).orElse(null);
+		if(album == null) {
+			throw new ResourceNotFoundExeception();
+		}
+		return album.getPhotos();
+	}
+	
+	@Override
 	public String getPhotoFileBase64(Integer code) throws ResourceNotFoundExeception, IOException {
 		Photo photo = photoRepository.findById(code).orElse(null);
 		if(photo == null) {
@@ -78,6 +87,9 @@ public class PhotoAlbumServiceImpl implements PhotoAlbumService {
 		validator.isOwner();
 		
 		photoAlbum = albumRepository.findById(code).orElse(null);
+		if(photoAlbum.isDefaultAlbum()) {
+			throw new NotOwnerException();
+		}
 		albumRepository.delete(photoAlbum);
 		for(Photo photo : photoAlbum.getPhotos()) {
 			photoRepository.delete(photo);

@@ -27,3 +27,18 @@ export interface Comment {
     owner: string,
     text: string,
 }
+
+export interface PhotoAlbum {
+    code: number,
+    name: string,
+    owner: string,
+    photoNumber:number,
+    mainPhotoBase64?:string,
+}
+
+export interface Photo {
+    code:number,
+    date: Date,
+    owner: string,
+    photoBase64?:string,
+}

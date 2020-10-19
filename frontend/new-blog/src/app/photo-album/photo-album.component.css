@@ -1,0 +1,29 @@
+.main-container {
+    width: 800px;
+    margin: 30px 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.main-container .album{
+    width: 200px;
+    min-width: 200px;
+    height: 200px;
+    margin: 10px;
+  
+}
+
+.album mat-card-title {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.album mat-card-title:hover {
+    text-decoration:underline;
+}
+
+.album img {
+    object-fit: scale-down;
+    height: 150px;
+}

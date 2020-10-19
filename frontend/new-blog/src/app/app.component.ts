@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'new-blog';
+  redirectToBlog() {
+    window.location.href = "/"
+  }
+
+  redirectToPhotoAlbum() {
+    window.location.href = "/album"
+  }
 }

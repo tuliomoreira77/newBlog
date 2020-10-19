@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -20,6 +21,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class JpaConfig {
+	@Value("${database.connect.uri}")
+	private String databaseUrl;
+	@Value("${database.username}")
+	private String database_user;
+	@Value("${database.password}")
+	private String database_pass;
+	
 	@Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter){
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -44,9 +52,9 @@ public class JpaConfig {
 	public Properties dataSourceProperties(ServletContext servletContext){
 		Properties properties = new Properties();
 		properties.put("database.driver", "org.postgresql.Driver");
-		properties.put("database.url", "jdbc:postgresql://localhost:5432/auth_database");
-		properties.put("database.username", "postgres");
-		properties.put("database.password", "root");
+		properties.put("database.url", databaseUrl);
+		properties.put("database.username", database_user);
+		properties.put("database.password", database_pass);
 		properties.put("database.show.sql", "false");
 		return properties;
 	}

@@ -26,4 +26,6 @@ public interface PhotoAlbumService {
 
 	String getPhotoFileBase64(Integer code) throws ResourceNotFoundExeception, IOException;
 
+	List<Photo> getPhotos(Integer albumCode) throws ResourceNotFoundExeception;
+
 }

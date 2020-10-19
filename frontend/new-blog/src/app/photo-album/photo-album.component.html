@@ -1,0 +1,7 @@
+<div class="main-container">
+    <mat-card class="album" *ngFor="let album of albums; let i = index">
+        <mat-card-title (click)="goToPhotos(album.code)">{{album.name}}</mat-card-title>
+        <mat-card-subtitle>{{album.photoNumber}} fotos</mat-card-subtitle>
+        <img mat-card-image *ngIf="album.mainPhotoBase64 != null" mat-card-image src="data:image/png;base64,{{album.mainPhotoBase64}}" alt="Imagem">
+    </mat-card>
+</div>

@@ -2,6 +2,7 @@ package com.mmoreira.auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter{
 	 private String clientid = "framework_new_blog";
 	 private String clientSecret = "framework_secret";
+	 
+	 @Value("${client.redirect.uri}")
+	 private String clienteRedirectUri;
 	 
 	 //TODO usar chaves RSA ao inves de HMAC
 	 private String privateKey = "f6891b4ebb65de4ad11b134e6cfd648b726e2c27";
@@ -62,7 +66,7 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter{
 	 public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		 clients.inMemory().withClient(clientid).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
 		 	.authorizedGrantTypes("password", "refresh_token", "authorization_code", "implicit")
-		 	.redirectUris("http://localhost:4200/oauth/redirect")
+		 	.redirectUris(clienteRedirectUri)
 		 	.autoApprove(true)
 		 	.accessTokenValiditySeconds(3600)
 		 	.refreshTokenValiditySeconds(3600);

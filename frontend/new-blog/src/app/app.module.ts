@@ -23,6 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {AuthInterceptor} from './auth/authInterceptor.service';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { PhotoAlbumComponent } from './photo-album/photo-album.component';
+import { PhotoRollComponent } from './photo-roll/photo-roll.component';
 
 
 registerLocaleData(localePt);
@@ -33,6 +35,8 @@ registerLocaleData(localePt);
     MainTimelineComponent,
     LoginComponent,
     RedirectComponent,
+    PhotoAlbumComponent,
+    PhotoRollComponent,
   ],
   imports: [
     BrowserModule,

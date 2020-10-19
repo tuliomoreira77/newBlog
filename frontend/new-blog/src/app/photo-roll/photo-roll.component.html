@@ -1,0 +1,8 @@
+<div class="main-container">
+    <mat-card class="post-card" *ngFor="let photo of photos; let i = index">
+        <mat-card-header>
+          <mat-card-subtitle>{{photo.date | date: 'medium'}}</mat-card-subtitle>
+        </mat-card-header>
+        <img *ngIf="photo.photoBase64 != null" mat-card-image src="data:image/png;base64,{{photo.photoBase64}}" alt="Imagem">
+    </mat-card>
+</div>
