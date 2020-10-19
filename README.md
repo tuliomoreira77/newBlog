@@ -1,7 +1,7 @@
 Instruções para rodar a aplicação:\
 A aplicação possui 2 servidores (autenticação (oaut2) e recursos) e será necessário rodar um servidor para o front-end, o banco de dados usado foi o postgres;
 
-1-Clonar o repositório e importar os projetos do backend no spring boot (backend/AuthServer e backend/BlogServer);\
+1-Clonar o repositório e importar os projetos do backend no spring tool suit boot (backend/AuthServer e backend/BlogServer);\
 2-Criar dois bancos de dados no postgres com nomes "blog_database" e "auth_database";\
 3-Configurar o App properties dos dois projetos com o url de conexão do postgres, o usuario e a senha;\
       database.connect.uri\
