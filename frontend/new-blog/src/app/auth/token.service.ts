@@ -87,7 +87,9 @@ export class TokenService {
 
   logout() {
     this.deleteCookie('token');
+    this.deleteCookie('JSESSIONID');
     this.isAuth.next(false);
     this.user.next('');
+    window.location.href = '/'
   }
 }
