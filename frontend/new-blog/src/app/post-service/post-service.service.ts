@@ -17,6 +17,10 @@ export class PostServiceService {
     return this.http.get<any>(`${CONFIG.GET_POSTS_URL}${pageNumber}`);
   }
 
+  searchPosts(pageNumber:number, query:string) {
+    return this.http.get<any>(`${CONFIG.GET_POSTS_URL}${pageNumber}/${encodeURIComponent(query)}`);
+  }
+
   getPhoto(code:number) {
     return this.http.get<any>(`${CONFIG.GET_IMAGE_URL}${code}`);
   }

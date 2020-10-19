@@ -7,7 +7,6 @@
 }
 
 .input-form {
-    margin: 5px 50px;
     font-size: 18px;
     font-weight: 600;
 }
@@ -29,7 +28,6 @@
     margin: 20px 0px;
     align-items: center;
     justify-content: center;
-    display: flex;
     width: 700px;
 }
 
@@ -91,4 +89,13 @@
 .comment-section .comment{
     padding: 5px 10px;
     font-size: 12px;
+}
+
+.searchbox {
+    background-color: #f8f8f8;
+    padding: 0px 20px;
+    display: flex;
+    font-size: 12px;
+    border-radius: 15px;
+    margin-bottom: 25px;
 }

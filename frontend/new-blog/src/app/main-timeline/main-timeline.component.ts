@@ -145,6 +145,21 @@ export class MainTimelineComponent implements OnInit {
   deleteComment(code:number) {
     this.postService.deleteComment(code).subscribe(data => {
       this.refreshPosts();
-  });
+    });
+  }
+
+  searchPosts(input:any) {
+    if(!input.value) {
+      this.refreshPosts();
+      return;
+    }
+    let query = {
+      text: input.value,
+    }
+    this.postService.searchPosts(0, query.text).subscribe(data => {
+      this.posts = [];
+      this.postArrayFactory(data);
+    });
+    input.value = "";
   }
 }

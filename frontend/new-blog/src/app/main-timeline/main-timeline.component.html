@@ -1,7 +1,16 @@
 <div class="main-container">
     <div fxLayout="row" class="new-post-area">
-        <mat-card class="new-post-card"> 
+          <mat-card class="new-post-card">
+            <div class="searchbox">
+              <mat-form-field style="width: 100%;">
+                <input type="text" matInput placeholder="Pesquisar" #searchText autocomplete="off">
+              </mat-form-field>
+              <button mat-icon-button color="primary" class="" (click)="searchPosts(searchText)">
+                <mat-icon>search</mat-icon>
+              </button>
+            </div>
             <div class="input-form full-width">
+                
                 <mat-form-field class="full-width">
                     <mat-label>Novo post</mat-label>
                     <textarea #newPostText matInput placeholder="Conte-nos algo interessante!"  cdkTextareaAutosize cdkAutosizeMaxRows="5" cdkAutosizeMinRows="1"></textarea>
@@ -44,7 +53,7 @@
               <div class="comment-section">
                 <div fxLayout="row" class="new-comment-section">
                   <mat-form-field style="width: 100%;">
-                    <input type="text" matInput placeholder="digite um comentário" #newCommentText>
+                    <input type="text" matInput placeholder="digite um comentário" #newCommentText autocomplete="off">
                   </mat-form-field>
                   <button mat-icon-button color="primary" class="" (click)="createComment(newCommentText, post.code)">
                     <mat-icon>send</mat-icon>
